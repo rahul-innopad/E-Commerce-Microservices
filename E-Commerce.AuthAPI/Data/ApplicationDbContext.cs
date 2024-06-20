@@ -15,6 +15,7 @@ namespace E_Commerce.AuthAPI.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ApplicationUser>().HasIndex(x => x.UniqueIdentifire).IsUnique();
             base.OnModelCreating(builder);
         }
     }

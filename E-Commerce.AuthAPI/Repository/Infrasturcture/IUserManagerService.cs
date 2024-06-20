@@ -10,5 +10,6 @@ namespace E_Commerce.AuthAPI.Repository.Infrasturcture
         Task<T> FindByUserName(string username, string normalizedUsername);
         Task<IList<string>> GetUserRolesAsync(T user);
         Task<byte[]> CreateSecurityTokenAsync(T user);
+        Task SaveChangeAsync();
     }
 }

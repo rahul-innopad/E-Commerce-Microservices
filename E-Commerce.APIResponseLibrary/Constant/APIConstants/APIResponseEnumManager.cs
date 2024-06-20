@@ -20,6 +20,8 @@ namespace E_Commerce.APIResponseLibrary.Constant.APIConstants
         NotAcceptable = 406,
         AlreadyReactiveUser = 420,
         Failed = 421,
+        IsDeleted = 422,
+        IsDeactivate = 423,
 
 
         InternalServerError = 500,

@@ -4,6 +4,6 @@ namespace E_Commerce.AuthAPI.Repository.AuthConfig
 {
     public interface IJWTTokenGenerator
     {
-       string GenerateToken(ApplicationUser applicationUser, IEnumerable<string> roles);
+       string GenerateToken(ApplicationUser applicationUser, IEnumerable<string> roles, string role);
     }
 }

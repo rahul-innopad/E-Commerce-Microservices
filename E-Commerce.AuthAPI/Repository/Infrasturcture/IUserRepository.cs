@@ -9,6 +9,7 @@ namespace E_Commerce.AuthAPI.Repository.Infrasturcture
         Task<APIResponse> GetUserListAsync();
         Task<APIResponse> GetUserAsync(string email, string username, string mobile);
         Task<APIResponse> UpdateUserAsync(RegisteredUserDto registeredUserDto);
+        Task<APIResponse> DeleteUserAsync(string email, string username);
         Task SaveChangeAsync();
     }
 }

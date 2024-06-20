@@ -5,17 +5,17 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{B45C20D8-24BC-4B66-AB81-B51A31ED846B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.AuthAPI", "E-Commerce.AuthAPI\E-Commerce.AuthAPI.csproj", "{298615B2-13FD-4E75-90FA-0E1F33E5698A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.AuthAPI", "E-Commerce.AuthAPI\E-Commerce.AuthAPI.csproj", "{298615B2-13FD-4E75-90FA-0E1F33E5698A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gatway", "Gatway", "{A7160AFF-F49B-4C91-A7DB-0BF084053CA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.ProductAPI", "E-Commerce.ProductAPI\E-Commerce.ProductAPI.csproj", "{34355A40-7BBE-4BEE-8237-331842C10AD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.ProductAPI", "E-Commerce.ProductAPI\E-Commerce.ProductAPI.csproj", "{34355A40-7BBE-4BEE-8237-331842C10AD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.OrderAPI", "E-Commerce.OrderAPI\E-Commerce.OrderAPI.csproj", "{76711769-41E7-4299-A31D-5FC64A6D2E51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.OrderAPI", "E-Commerce.OrderAPI\E-Commerce.OrderAPI.csproj", "{76711769-41E7-4299-A31D-5FC64A6D2E51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.APIResponseLibrary", "E-Commerce.APIResponseLibrary\E-Commerce.APIResponseLibrary.csproj", "{C3B92050-5D76-4715-8029-2C78FD69C81D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.APIResponseLibrary", "E-Commerce.APIResponseLibrary\E-Commerce.APIResponseLibrary.csproj", "{C3B92050-5D76-4715-8029-2C78FD69C81D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.DAL", "E-Commerce.DAL\E-Commerce.DAL.csproj", "{EB7D177F-1231-4736-8531-3AE74AEC31FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.DAL", "E-Commerce.DAL\E-Commerce.DAL.csproj", "{EB7D177F-1231-4736-8531-3AE74AEC31FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

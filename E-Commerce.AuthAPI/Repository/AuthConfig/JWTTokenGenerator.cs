@@ -15,16 +15,17 @@ namespace E_Commerce.AuthAPI.Repository.AuthConfig
         {
             _jwtOptions = options.Value;
         }
-        public string GenerateToken(ApplicationUser applicationUser, IEnumerable<string> roles)
+        public string GenerateToken(ApplicationUser applicationUser, IEnumerable<string> roles, string role)
         {
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtOptions.Secret);
             var claimList = new List<Claim>
             {
                 new Claim(ClaimTypes.Email,applicationUser.Email),
+                new Claim(ClaimTypes.Role,role),
             };
 
-            claimList.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            //claimList.AddRange(roles.Select(role => new Claim("Roles", role)));
 
             var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 

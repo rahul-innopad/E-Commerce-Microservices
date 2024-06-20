@@ -5,6 +5,7 @@ using E_Commerce.AuthAPI.Repository.AuthConfig;
 using E_Commerce.AuthAPI.Repository.Infrasturcture;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace E_Commerce.AuthAPI.Repository
 {
@@ -25,8 +26,15 @@ namespace E_Commerce.AuthAPI.Repository
             try
             {
                 var user = await _userManagerService.FindByEmailAsync(emailAddress, emailAddress.ToUpper());
-                if (user == null)
-                    return new APIResponse { StatusCode = (int)APIResponseEnumManager.NotFound, Status = false, Message = APIMessage.UserNotFound };
+                if (user == null || user.IsDeleted==true || user.IsActive == false)
+                {
+                    if(user==null)
+                        return new APIResponse { StatusCode = (int)APIResponseEnumManager.NotFound, Status = false, Message = APIMessage.UserNotFound };
+                    else if(user.IsDeleted)
+                        return new APIResponse { StatusCode = (int)APIResponseEnumManager.IsDeleted, Status = false, Message = APIMessage.Deleted };
+                    else
+                        return new APIResponse { StatusCode = (int)APIResponseEnumManager.IsDeactivate, Status = false, Message = APIMessage.IsDeactivate };
+                }
                 else
                 {
                     //Verify Password 
@@ -34,8 +42,11 @@ namespace E_Commerce.AuthAPI.Repository
                     switch (verifyPassword)
                     {
                         case PasswordVerificationResult.Success:
+                            user.IsLogin = true;
+                            await _userManagerService.UpdateAsync(user);
+                            await _userManagerService.SaveChangeAsync();
                             var roles = await _userManagerService.GetUserRolesAsync(user);
-                            var token = _jWTTokenGenerator.GenerateToken(user, roles);
+                            var token = _jWTTokenGenerator.GenerateToken(user, roles,roles.First());
                             return new APIResponse { StatusCode = (int)APIResponseEnumManager.Success, Status = true, Message = APIMessage.Success, Response = token };
                         case PasswordVerificationResult.Failed:
                             return new APIResponse { StatusCode = (int)APIResponseEnumManager.Failed, Status = false, Message = APIMessage.InvalidPassword };
@@ -53,9 +64,18 @@ namespace E_Commerce.AuthAPI.Repository
            
         }
 
-        public Task<APIResponse> GetLoggedOutUser(string username, string password)
+        public async Task<APIResponse> GetLoggedOutUser(string emailId)
         {
-            throw new NotImplementedException();
+            var getUser = await _userManagerService.FindByEmailAsync(emailId,emailId.ToUpper());
+            if(getUser==null)
+                return new APIResponse { StatusCode = (int)APIResponseEnumManager.NotFound, Status = false, Message = APIMessage.UserNotFound };
+            else
+            {
+                getUser.IsLogin = false;
+                await _userManagerService.UpdateAsync(getUser);
+                await _userManagerService.SaveChangeAsync();
+                return new APIResponse { StatusCode = (int)APIResponseEnumManager.Success, Status = true, Message = APIMessage.LoggedOut };
+            }
         }
     }
 }

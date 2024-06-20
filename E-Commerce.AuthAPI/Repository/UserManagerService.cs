@@ -1,4 +1,5 @@
-﻿using E_Commerce.AuthAPI.Models;
+﻿using E_Commerce.AuthAPI.Data;
+using E_Commerce.AuthAPI.Models;
 using E_Commerce.AuthAPI.Repository.Infrasturcture;
 using Microsoft.AspNetCore.Identity;
 
@@ -7,9 +8,11 @@ namespace E_Commerce.AuthAPI.Repository
     public class UserManagerService : IUserManagerService<ApplicationUser>
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        public UserManagerService(UserManager<ApplicationUser> userManager)
+        private readonly ApplicationDbContext _applicationDbContext;
+        public UserManagerService(UserManager<ApplicationUser> userManager,ApplicationDbContext applicationDbContext)
         {
             this._userManager = userManager;
+            this._applicationDbContext = applicationDbContext;
         }
 
         
@@ -38,6 +41,11 @@ namespace E_Commerce.AuthAPI.Repository
         {
             var roles= await _userManager.GetRolesAsync(user);
             return roles;
+        }
+
+        public async Task SaveChangeAsync()
+        {
+            await _applicationDbContext.SaveChangesAsync();
         }
 
         public async Task<IdentityResult> UpdateAsync(ApplicationUser user)

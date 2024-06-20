@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using E_Commerce.APIResponseLibrary.Constant.APIConstants;
+using E_Commerce.APIResponseLibrary.ConvertReturner;
 using E_Commerce.AuthAPI.Data;
 using E_Commerce.AuthAPI.Models;
 using E_Commerce.AuthAPI.Models.Dto;
 using E_Commerce.AuthAPI.Repository.Infrasturcture;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace E_Commerce.AuthAPI.Repository
 {
@@ -29,6 +31,9 @@ namespace E_Commerce.AuthAPI.Repository
         {
             var createUserMapper = _mapper.Map<ApplicationUser>(user);
             createUserMapper.PasswordHash = _passwordManager.HashPassword(createUserMapper,createUserMapper.PasswordHash);
+            createUserMapper.IsDeleted = false;
+            createUserMapper.IsActive = true;
+            createUserMapper.UniqueIdentifire = MasterValueConvertorOrReturner.Auth + MasterValueConvertorOrReturner.GetUniqueStringValue();
             var result = await _userManager.CreateAsync(createUserMapper);
             await SaveChangeAsync();
             if (result.Succeeded)
@@ -36,6 +41,30 @@ namespace E_Commerce.AuthAPI.Repository
                 return new APIResponse { StatusCode = (int)APIResponseEnumManager.Success, Status = true, Message = APIMessage.Success, Response = result };
             }
             return new APIResponse { StatusCode = (int)APIResponseEnumManager.InternalServerError, Status = false, Message = APIMessage.Failed, Response = result };
+        }
+
+        public async Task<APIResponse> DeleteUserAsync(string email, string username)
+        {
+            if (string.IsNullOrEmpty(email) && string.IsNullOrEmpty(username))
+            {
+                return new APIResponse { StatusCode = (int)APIResponseEnumManager.BadRequest, Status = false, Message = APIMessage.AtLeastProvideOne };
+            }
+            var getUser = await _applicationDbContext.ApplicationUsers.FirstOrDefaultAsync(x=> (x.Email==email && x.NormalizedEmail==email.ToUpper() && x.IsDeleted==false) || (x.UserName==username && x.NormalizedUserName==username.ToUpper() && x.IsDeleted == false));
+            if (getUser != null)
+            {
+                getUser.IsActive = false;
+                getUser.IsDeleted = true;
+                var result = await _userManager.UpdateAsync(getUser);
+                if (result.Succeeded)
+                {
+                    await SaveChangeAsync();
+                    return new APIResponse { StatusCode = (int)APIResponseEnumManager.Success, Status = true, Message = APIMessage.Deleted, Response = result };
+                }
+                else
+                    return new APIResponse { StatusCode = (int)APIResponseEnumManager.InternalServerError, Status = false, Message = APIMessage.Failed, Response = result };
+            }
+            return new APIResponse { StatusCode = (int)APIResponseEnumManager.NotFound, Status = false, Message = APIMessage.UserNotFound };
+
         }
 
         public async Task<APIResponse> GetUserAsync(string email, string username, string mobile)
