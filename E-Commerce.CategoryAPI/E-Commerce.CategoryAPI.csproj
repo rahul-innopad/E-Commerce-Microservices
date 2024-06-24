@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>E_Commerce.ProductAPI</RootNamespace>
+    <RootNamespace>E_Commerce.CategoryAPI</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,10 +17,6 @@
     <ProjectReference Include="..\E-Commerce.APIResponseLibrary\E-Commerce.APIResponseLibrary.csproj" />
     <ProjectReference Include="..\E-Commerce.DAL\E-Commerce.DAL.csproj" />
     <ProjectReference Include="..\E-Commerce.MasterInterfaces\E-Commerce.MasterInterfaces.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="AppLog\Log\" />
   </ItemGroup>
 
 </Project>

@@ -1,14 +1,16 @@
 ﻿using E_Commerce.APIResponseLibrary.Constant;
+using E_Commerce.APIResponseLibrary.Constant.APIConstants;
+using E_Commerce.CategoryAPI.Models;
+using E_Commerce.CategoryAPI.Repository;
+using E_Commerce.CategoryAPI.Repository.Infrasturcture;
 using E_Commerce.DAL.Models;
-using E_Commerce.ProductAPI.Repository;
-using E_Commerce.ProductAPI.Repository.Infrasturcture;
+using E_Commerce.MasterInterfaces.CURDInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-namespace E_Commerce.ProductAPI.Extentions
+namespace E_Commerce.CategoryAPI.Extentions
 {
     public static class WebApplicationBuilderExtensions
     {
@@ -44,6 +46,7 @@ namespace E_Commerce.ProductAPI.Extentions
                 };
             });
 
+
             return builder;
         }
 
@@ -51,7 +54,7 @@ namespace E_Commerce.ProductAPI.Extentions
         {
             builder.Services.AddSwaggerGen(opt =>
             {
-                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "E-Commerce.ProductAPI", Version = "v1" });
+                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "E-Commerce.CategoryAPI", Version = "v1" });
                 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -86,7 +89,7 @@ namespace E_Commerce.ProductAPI.Extentions
         }
         public static WebApplicationBuilder AddScopedServices(this WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             return builder;
         }
 

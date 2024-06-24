@@ -60,11 +60,28 @@ namespace E_Commerce.DAL.Models
             {
                 entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 
+                entity.HasIndex(e => e.UniqueIdentifire, "IX_AspNetUsers_UniqueIdentifire")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
                     .IsUnique()
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
 
+                entity.Property(e => e.CreatedDate).HasDefaultValueSql("('0001-01-01T00:00:00.0000000')");
+
                 entity.Property(e => e.Email).HasMaxLength(256);
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+
+                entity.Property(e => e.IsDeleted)
+                    .IsRequired()
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+
+                entity.Property(e => e.IsLogin)
+                    .IsRequired()
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.Property(e => e.Name).HasDefaultValueSql("(N'')");
 
@@ -123,6 +140,9 @@ namespace E_Commerce.DAL.Models
             {
                 entity.ToTable("CategoryMaster");
 
+                entity.HasIndex(e => e.UniqueCategoryId, "UQ_UniqueCategoryId")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.UniqueCategiryCode, "UQ__Category__788FAB49144168FF")
                     .IsUnique();
 
@@ -135,11 +155,18 @@ namespace E_Commerce.DAL.Models
                 entity.Property(e => e.LastUpdateAt).HasColumnType("datetime");
 
                 entity.Property(e => e.UniqueCategiryCode).HasMaxLength(100);
+
+                entity.Property(e => e.UniqueCategoryId).HasMaxLength(50);
             });
 
             modelBuilder.Entity<ProductMaster>(entity =>
             {
                 entity.ToTable("ProductMaster");
+
+                entity.HasIndex(e => e.UniqueProductId, "UQ_UniqueProductId")
+                    .IsUnique();
+
+                entity.Property(e => e.CategoryId).HasMaxLength(50);
 
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
@@ -152,6 +179,14 @@ namespace E_Commerce.DAL.Models
                 entity.Property(e => e.Sku)
                     .HasMaxLength(100)
                     .HasColumnName("SKU");
+
+                entity.Property(e => e.UniqueProductId).HasMaxLength(50);
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.ProductMasters)
+                    .HasPrincipalKey(p => p.UniqueCategoryId)
+                    .HasForeignKey(d => d.CategoryId)
+                    .HasConstraintName("FK_ProductMaster_CategoryId_CategoryMaster");
             });
 
             modelBuilder.Entity<Register33>(entity =>

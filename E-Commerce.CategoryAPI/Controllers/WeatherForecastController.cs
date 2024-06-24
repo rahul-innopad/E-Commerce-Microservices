@@ -1,10 +1,7 @@
-using E_Commerce.APIResponseLibrary.Constant.RoleManager;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace E_Commerce.ProductAPI.Controllers
+namespace E_Commerce.CategoryAPI.Controllers
 {
-    [Authorize(Roles =MasterRoleManager.AdminOrSuperAdmin)]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -12,7 +9,7 @@ namespace E_Commerce.ProductAPI.Controllers
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+    };
 
         private readonly ILogger<WeatherForecastController> _logger;
 
