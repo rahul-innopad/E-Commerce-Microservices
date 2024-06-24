@@ -29,6 +29,11 @@ namespace E_Commerce.DAL.Models
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string Name { get; set; } = null!;
+        public DateTime CreatedDate { get; set; }
+        public bool? IsActive { get; set; }
+        public bool? IsDeleted { get; set; }
+        public bool? IsLogin { get; set; }
+        public string UniqueIdentifire { get; set; } = null!;
 
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }

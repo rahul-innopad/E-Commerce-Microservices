@@ -17,5 +17,8 @@ namespace E_Commerce.APIResponseLibrary.Constant.APIConstants
         public static string InternalServerError = "Internal Server Error, Please try after some time";
         public static string AtLeastProvideOne = "At least one of email, username, or mobile must be provided.";
         public static string LoggedOut = "Logged Out Successfully";
+
+        public static string NotFound = "{0} not found";
+        public static string NotNull = "{0} mut be required";
     }
 }

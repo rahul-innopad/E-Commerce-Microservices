@@ -1,5 +1,4 @@
-using E_Commerce.APIResponseLibrary.Constant;
-using E_Commerce.ProductAPI.Extentions;
+using E_Commerce.CategoryAPI.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +14,7 @@ builder.AddScopedServices();
 builder.AddSingletonServices();
 builder.AddTransientServices();
 builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
